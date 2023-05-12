@@ -202,6 +202,7 @@ public class XmlUserAccessor implements IUserAccessor{
 	public UserModel add(UserModel user) {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = null;
+        
 		try {
 			dBuilder = dbFactory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
@@ -223,17 +224,18 @@ public class XmlUserAccessor implements IUserAccessor{
 		researcher.setAttribute("id", UUID.randomUUID().toString());
 		
 		Element researcherName = doc.createElement("researcher_name");
-		researcher.setTextContent(user.getUsername());
+		researcherName.setTextContent(user.getUsername());
 
 	    Element passwordElem = doc.createElement("password");
 	    passwordElem.setTextContent(user.getPassword());
-	    
-	    if(! (existsAllByIds(user.getFollowerUsers()) && existsAllByIds(user.getFollowingUsers()))) {
-			 throw new RuntimeException("Invalid user list");
-		 }
-		 if(!StringUtils.areElementsUnique(user.getFollowerUsers()) || !StringUtils.areElementsUnique(user.getFollowingUsers())) {
-			 throw new RuntimeException("There are duplicates!");
-		 }
+	    if(!user.getFollowerUsers().isEmpty() && !user.getFollowingUsers().isEmpty()) {
+	    	 if(! (existsAllByIds(user.getFollowerUsers()) && existsAllByIds(user.getFollowingUsers()))) {
+				 throw new RuntimeException("Invalid user list");
+			 }
+			 if(!StringUtils.areElementsUnique(user.getFollowerUsers()) || !StringUtils.areElementsUnique(user.getFollowingUsers())) {
+				 throw new RuntimeException("There are duplicates!");
+			 }
+	    }
 	    
 	    Element followings = doc.createElement("following_researcher_names");
 	    followings.setTextContent(StringUtils.listToCommaSeperatedString(user.getFollowingUsers()));
@@ -343,6 +345,7 @@ public class XmlUserAccessor implements IUserAccessor{
         	 if(node.getNodeType() == Node.ELEMENT_NODE) {
         		 Element element = (Element) node;
         		 if(element.getElementsByTagName("researcher_name").item(0).getTextContent().equals(id)) {
+        			 System.out.print(id+" "+element.getElementsByTagName("researcher_name")+"\n\n\n");
         			 return true;
         		 }
         	 }
