@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><researcherList>
+	<researcher id="1">
+		<researcher_name>tugkantuglular</researcher_name>
+		<password>12345</password>
+		<following_researcher_names>emrahinan</following_researcher_names>
+		<follower_researcher_names>buraktopcu</follower_researcher_names>
+	</researcher>
+	<researcher id="2">
+		<researcher_name>dilekozturk</researcher_name>
+		<password>12345</password>
+		<following_researcher_names>tugkantuglular</following_researcher_names>
+		<follower_researcher_names/>
+	</researcher>
+	<researcher id="3">
+		<researcher_name>emrahinan</researcher_name>
+		<password>12345</password>
+		<following_researcher_names/>
+		<follower_researcher_names>tugkantuglular</follower_researcher_names>
+	</researcher>
+	<researcher id="4">
+		<researcher_name>serhatcaner</researcher_name>
+		<password>12345</password>
+		<following_researcher_names/>
+		<follower_researcher_names/>
+	</researcher>
+	<researcher id="5">
+		<researcher_name>buraktopcu</researcher_name>
+		<password>12345</password>
+		<following_researcher_names>tugkantuglular</following_researcher_names>
+		<follower_researcher_names/>
+	</researcher>
+</researcherList>
