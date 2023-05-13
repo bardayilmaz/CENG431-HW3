@@ -38,8 +38,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		IUserAccessor userAccessor = new XmlUserAccessor("src/main/resources/researchers.xml");
-		UserModel user = userAccessor.getById("tugkantuglular");
-		userAccessor.delete(user);
+		UserModel userModel = new UserModel("berke111", " ", new ArrayList<String>(), new ArrayList<String>());
+		
+		userAccessor.add(userModel);
+	
 		/*UserModel userModel = new UserModel()d
         LoginView loginView = new LoginView(userModel);
         LoginController loginController = new LoginController(loginView, userModel);
