@@ -12,15 +12,27 @@ public class StringUtils {
 	
 	public static String listToCommaSeperatedString(List<String> list) {
 		String result = "";
-		for(String element : list) {
-			result = result.concat(element).concat(",");
+		if(!list.isEmpty() || list != null) {
+			for(String element : list) {
+				result = result.concat(element).concat(",");
+			}
+			if(!list.isEmpty()) {
+				return result.substring(0, result.length()-1);
+			}
 		}
-		return result.substring(0, result.length()-1);
+		return " "; // TODO this mf does not work, when giving "". So I give " ", brilliant.
 	}
 	
 	public static boolean areElementsUnique(List<String> list) {
 		Set<String> stringSet = new HashSet<>(list);
 	    return stringSet.size() == list.size();
+	}
+	
+	public static boolean isStringEmpty(String string) {
+		if(string == "" || string == null) {
+			return true;
+		}
+		return false;
 	}
 
 }

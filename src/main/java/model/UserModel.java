@@ -5,22 +5,31 @@ import java.util.Observable;
 
 public class UserModel extends Observable {
 	
-	private String id;
     private String username;
     private String password;
     private List<String> followingUsers;
     private List<String> followerUsers;
     // TODO following pubs
     
-    public UserModel(String id, String username, String password, List<String> followingUsers, List<String> followerUsers) {
+    public UserModel(String username, String password, List<String> followingUsers, List<String> followerUsers) {
 		super();
 		this.username = username;
 		this.password = password;
-		this.id = id;
 		this.followingUsers = followingUsers;
 		this.followerUsers = followerUsers;
 	}
     
+    public UserModel(UserModel userModel) {
+    	super();
+    	this.username = userModel.getUsername();
+    	this.password = userModel.getPassword();
+		this.followingUsers = userModel.getFollowingUsers();
+		this.followerUsers = userModel.getFollowerUsers();
+    }
+    
+    public UserModel() {
+    	super();
+    }
     
     public void setUsername(String username) {
         this.username = username;
@@ -42,13 +51,6 @@ public class UserModel extends Observable {
 		return password;
 	}
 	
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public List<String> getFollowingUsers() {
 		return followingUsers;
@@ -68,6 +70,14 @@ public class UserModel extends Observable {
 
 	public boolean isValidUser(String username, String password) {
 		return this.password.equals(password) && this.username.equals(username);
+	}
+
+
+	@Override
+	public String toString() {
+		return "User:\n "
+				+ "Username=" + username + ", FollowingUsers=" + followingUsers + ", FollowerUsers="
+				+ followerUsers ;
 	}
     
     
