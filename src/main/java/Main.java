@@ -9,8 +9,10 @@ import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.apache.commons.csv.CSVRecord;
 import org.jbibtex.BibTeXEntry;
@@ -21,7 +23,9 @@ import test.SphereWindow;
 import model.*;
 import view.*;
 import controller.*;
+import data_access.IReadingListAccessor;
 import data_access.IUserAccessor;
+import data_access.JsonReadingListAccessor;
 import data_access.XmlUserAccessor;
 import file_io.BibFileParser;
 import file_io.CsvPaperWriter;
@@ -42,9 +46,16 @@ public class Main {
 		UserModel userModel = new UserModel();
         LoginView loginView = new LoginView(userModel);
         LoginController loginController = new LoginController(loginView, userModel);
-        loginController.setUserAccessor(userAccessor);
+        //loginController.setUserAccessor(userAccessor);
+        //loginView.setVisible(true);
         
-        loginView.setVisible(true);
+        IReadingListAccessor accessor = new JsonReadingListAccessor("src/main/resources/reading_lists.json");
+        ReadingListModel readingListModel = new ReadingListModel("1", "tugkantuglularsssssssssssssssssssssssssssssssssssssssssssssssss", "zort", 1, new HashSet<>(Arrays.asList("hehe2", "hehe3")));
+        accessor.update(readingListModel);
+        ReadingListModel readingListModel2 = accessor.getById("1");
+        System.out.println(readingListModel2.getName());
+        
+        
 
        
 	}

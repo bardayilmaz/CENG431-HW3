@@ -65,18 +65,7 @@ public class XmlUserAccessor implements IUserAccessor{
         	 Node node = nList.item(currentPosition);
         	 if(node.getNodeType() == Node.ELEMENT_NODE) {
         		 Element element = (Element) node;
-        		 List<String> followingUsers = new ArrayList<>();
-        		 List<String> followerUsers = new ArrayList<>();
-        		 for(String username : element.getElementsByTagName("following_researchers_names").item(0).getTextContent().split(",")) {
-        			 followingUsers.add(username);
-        		 }
-        		 for(String username : element.getElementsByTagName("follower_researchers_names").item(0).getTextContent().split(",")) {
-        			 followerUsers.add(username);
-        		 }
-        		 UserModel user = new UserModel(
-        				 element.getElementsByTagName("researcher_name").item(0).getTextContent(),
-        				 element.getElementsByTagName("password").item(0).getTextContent(), 
-        				 followingUsers, followerUsers);
+        		 UserModel user = fromXmlToUserModel(element);
         		 result.add(user);
         	 }
     	 }
@@ -111,25 +100,14 @@ public class XmlUserAccessor implements IUserAccessor{
         		 if(!element.getElementsByTagName("researcher_name").item(0).getTextContent().equals(id)) {
         			 continue;
         		 }
-        		 List<String> followingUsers = new ArrayList<>();
-        		 List<String> followerUsers = new ArrayList<>();
-        		 for(String username : element.getElementsByTagName("following_researcher_names").item(0).getTextContent().split(",")) {
-        			 followingUsers.add(username);
-        		 }
-        		 for(String username : element.getElementsByTagName("follower_researcher_names").item(0).getTextContent().split(",")) {
-        			 followerUsers.add(username);
-        		 }
-        		 result = new UserModel(
-        				 element.getElementsByTagName("researcher_name").item(0).getTextContent(),
-        				 element.getElementsByTagName("password").item(0).getTextContent(), 
-        				 followingUsers, followerUsers);
+        		result = fromXmlToUserModel(element);
         	 }
     	 }
 		return result;
 	}
 
 	@Override
-	public UserModel update(UserModel user) {
+	public UserModel update(UserModel data) {
 		UserModel result = null;
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = null;
@@ -153,25 +131,17 @@ public class XmlUserAccessor implements IUserAccessor{
         	 Node node = nList.item(currentPosition);
         	 if(node.getNodeType() == Node.ELEMENT_NODE) {
         		 Element element = (Element) node;
-        		 if(!element.getElementsByTagName("researcher_name").item(0).getTextContent().equals(user.getUsername())) {
+        		 if(!element.getElementsByTagName("researcher_name").item(0).getTextContent().equals(data.getUsername())) {
         			 continue;
         		 }
-        		 if(! (existsAllByIds(user.getFollowerUsers()) && existsAllByIds(user.getFollowingUsers()))) {
+        		 if(! (existsAllByIds(data.getFollowerUsers()) && existsAllByIds(data.getFollowingUsers()))) {
         			 throw new RuntimeException("Invalid user list");
         		 }
-        		 if(!StringUtils.areElementsUnique(user.getFollowerUsers()) || !StringUtils.areElementsUnique(user.getFollowingUsers())) {
+        		 if(!StringUtils.areElementsUnique(data.getFollowerUsers()) || !StringUtils.areElementsUnique(data.getFollowingUsers())) {
         			 throw new RuntimeException("There are duplicates!");
         		 }
-        		 element.getElementsByTagName("following_researcher_names").item(0).setTextContent(StringUtils.listToCommaSeperatedString(user.getFollowingUsers()));
-                 element.getElementsByTagName("follower_researcher_names").item(0).setTextContent(StringUtils.listToCommaSeperatedString(user.getFollowerUsers()));
-        		 List<String> followingUsers = new ArrayList<>();
-        		 List<String> followerUsers = new ArrayList<>();
-        		 for(String username : element.getElementsByTagName("following_researcher_names").item(0).getTextContent().split(",")) {
-        			 followingUsers.add(username);
-        		 }
-        		 for(String username : element.getElementsByTagName("follower_researcher_names").item(0).getTextContent().split(",")) {
-        			 followerUsers.add(username);
-        		 }
+        		 element.getElementsByTagName("following_researcher_names").item(0).setTextContent(StringUtils.listToCommaSeperatedString(data.getFollowingUsers()));
+                 element.getElementsByTagName("follower_researcher_names").item(0).setTextContent(StringUtils.listToCommaSeperatedString(data.getFollowerUsers()));
         		 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                  Transformer transformer = null;
 				try {
@@ -188,10 +158,7 @@ public class XmlUserAccessor implements IUserAccessor{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-        		 result = new UserModel(
-        				 element.getElementsByTagName("researcher_name").item(0).getTextContent(),
-        				 element.getElementsByTagName("password").item(0).getTextContent(), 
-        				 followingUsers, followerUsers);
+        		 result = fromXmlToUserModel(element);
         		 break;
         	 }
     	 }
@@ -199,7 +166,7 @@ public class XmlUserAccessor implements IUserAccessor{
 	}
 
 	@Override
-	public UserModel add(UserModel user) {
+	public UserModel add(UserModel data) {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = null;
         
@@ -217,34 +184,34 @@ public class XmlUserAccessor implements IUserAccessor{
 		if(doc == null) {
 			return null;
 		}
-		if(existsById(user.getUsername())) {
+		if(existsById(data.getUsername())) {
 			throw new RuntimeException("User already exists");
 		}
 		Element researcher = doc.createElement("researcher");
 		researcher.setAttribute("id", UUID.randomUUID().toString());
 		
 		Element researcherName = doc.createElement("researcher_name");
-		researcherName.setTextContent(user.getUsername());
+		researcherName.setTextContent(data.getUsername());
 		
-		if((StringUtils.isStringEmpty(user.getPassword()))) {
+		if((StringUtils.isStringEmpty(data.getPassword()))) {
 			throw new RuntimeException("Password can not be empty!");
 		}
 		
 	    Element passwordElem = doc.createElement("password");
-	    passwordElem.setTextContent(user.getPassword());
+	    passwordElem.setTextContent(data.getPassword());
 	   
-	    if(! (existsAllByIds(user.getFollowerUsers()) && existsAllByIds(user.getFollowingUsers()))) {
+	    if(! (existsAllByIds(data.getFollowerUsers()) && existsAllByIds(data.getFollowingUsers()))) {
 	    	throw new RuntimeException("Invalid user list");
 		}
-	    if(!StringUtils.areElementsUnique(user.getFollowerUsers()) || !StringUtils.areElementsUnique(user.getFollowingUsers())) {
+	    if(!StringUtils.areElementsUnique(data.getFollowerUsers()) || !StringUtils.areElementsUnique(data.getFollowingUsers())) {
 			throw new RuntimeException("There are duplicates!"); 
 	    }
 	    
 	    Element followings = doc.createElement("following_researcher_names");
-	    followings.setTextContent(StringUtils.listToCommaSeperatedString(user.getFollowingUsers()));
+	    followings.setTextContent(StringUtils.listToCommaSeperatedString(data.getFollowingUsers()));
 	    
 	    Element followers = doc.createElement("follower_researcher_names");
-	    followers.setTextContent(StringUtils.listToCommaSeperatedString(user.getFollowerUsers()));
+	    followers.setTextContent(StringUtils.listToCommaSeperatedString(data.getFollowerUsers()));
 	    
 	    researcher.appendChild(researcherName);
 	    researcher.appendChild(passwordElem);
@@ -271,17 +238,17 @@ public class XmlUserAccessor implements IUserAccessor{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return user;
+		return data;
 	}
 
 	@Override
-	public UserModel delete(UserModel user) {
+	public UserModel delete(String id) {
+		UserModel userModel = null;
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 	    DocumentBuilder docBuilder = null;
 		try {
 			docBuilder = docFactory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Document doc = null;
@@ -297,18 +264,18 @@ public class XmlUserAccessor implements IUserAccessor{
 	        if (researcher.getNodeType() == Node.ELEMENT_NODE) {
 	            Element element = (Element) researcher;
 	            String name = element.getElementsByTagName("researcher_name").item(0).getTextContent();
-	            if (name.equals(user.getUsername())) {
+	            if (name.equals(id)) {
 	                researcher.getParentNode().removeChild(researcher);
 	            }
+	            userModel = fromXmlToUserModel(element);
 	        }
 	    }
-	 // Write the updated XML to file
+	    
 	    TransformerFactory transformerFactory = TransformerFactory.newInstance();
 	    Transformer transformer = null;
 		try {
 			transformer = transformerFactory.newTransformer();
 		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    DOMSource source = new DOMSource(doc);
@@ -316,11 +283,10 @@ public class XmlUserAccessor implements IUserAccessor{
 	    try {
 			transformer.transform(source, result);
 		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return user;
+		return userModel;
 	}
 
 	@Override
@@ -367,5 +333,20 @@ public class XmlUserAccessor implements IUserAccessor{
 		
 	}
 	
-
+	private UserModel fromXmlToUserModel(Element element) {
+		 UserModel userModel = new UserModel();
+		 List<String> followingUsers = new ArrayList<>();
+		 List<String> followerUsers = new ArrayList<>();
+		 for(String username : element.getElementsByTagName("following_researcher_names").item(0).getTextContent().split(",")) {
+			 followingUsers.add(username);
+		 }
+		 for(String username : element.getElementsByTagName("follower_researcher_names").item(0).getTextContent().split(",")) {
+			 followerUsers.add(username);
+		 }
+		 userModel = new UserModel(
+				 element.getElementsByTagName("researcher_name").item(0).getTextContent(),
+				 element.getElementsByTagName("password").item(0).getTextContent(), 
+				 followingUsers, followerUsers);
+		 return userModel;
+	}
 }

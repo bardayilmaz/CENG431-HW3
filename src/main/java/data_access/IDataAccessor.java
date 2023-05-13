@@ -8,11 +8,11 @@ public interface IDataAccessor<T, U> {
 	
 	U getById(T id);
 
-	U update(U user);
+	U update(U data);
 	
-	U add(U user);
+	U add(U data);
 	
-	U delete(U user);
+	U delete(T id);
 	
 	boolean existsById(T id);
 	
