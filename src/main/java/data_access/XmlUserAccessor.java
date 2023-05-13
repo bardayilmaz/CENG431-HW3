@@ -73,7 +73,7 @@ public class XmlUserAccessor implements IUserAccessor{
         		 for(String username : element.getElementsByTagName("follower_researchers_names").item(0).getTextContent().split(",")) {
         			 followerUsers.add(username);
         		 }
-        		 UserModel user = new UserModel(element.getAttribute("id"),
+        		 UserModel user = new UserModel(
         				 element.getElementsByTagName("researcher_name").item(0).getTextContent(),
         				 element.getElementsByTagName("password").item(0).getTextContent(), 
         				 followingUsers, followerUsers);
@@ -119,7 +119,7 @@ public class XmlUserAccessor implements IUserAccessor{
         		 for(String username : element.getElementsByTagName("follower_researcher_names").item(0).getTextContent().split(",")) {
         			 followerUsers.add(username);
         		 }
-        		 result = new UserModel(element.getAttribute("id"),
+        		 result = new UserModel(
         				 element.getElementsByTagName("researcher_name").item(0).getTextContent(),
         				 element.getElementsByTagName("password").item(0).getTextContent(), 
         				 followingUsers, followerUsers);
@@ -188,7 +188,7 @@ public class XmlUserAccessor implements IUserAccessor{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-        		 result = new UserModel(element.getAttribute("id"),
+        		 result = new UserModel(
         				 element.getElementsByTagName("researcher_name").item(0).getTextContent(),
         				 element.getElementsByTagName("password").item(0).getTextContent(), 
         				 followingUsers, followerUsers);
@@ -225,16 +225,19 @@ public class XmlUserAccessor implements IUserAccessor{
 		
 		Element researcherName = doc.createElement("researcher_name");
 		researcherName.setTextContent(user.getUsername());
-
+		
+		if((StringUtils.isStringEmpty(user.getPassword()))) {
+			throw new RuntimeException("Password can not be empty!");
+		}
+		
 	    Element passwordElem = doc.createElement("password");
 	    passwordElem.setTextContent(user.getPassword());
-	    if(!user.getFollowerUsers().isEmpty() && !user.getFollowingUsers().isEmpty()) {
-	    	 if(! (existsAllByIds(user.getFollowerUsers()) && existsAllByIds(user.getFollowingUsers()))) {
-				 throw new RuntimeException("Invalid user list");
-			 }
-			 if(!StringUtils.areElementsUnique(user.getFollowerUsers()) || !StringUtils.areElementsUnique(user.getFollowingUsers())) {
-				 throw new RuntimeException("There are duplicates!");
-			 }
+	   
+	    if(! (existsAllByIds(user.getFollowerUsers()) && existsAllByIds(user.getFollowingUsers()))) {
+	    	throw new RuntimeException("Invalid user list");
+		}
+	    if(!StringUtils.areElementsUnique(user.getFollowerUsers()) || !StringUtils.areElementsUnique(user.getFollowingUsers())) {
+			throw new RuntimeException("There are duplicates!"); 
 	    }
 	    
 	    Element followings = doc.createElement("following_researcher_names");
@@ -345,7 +348,6 @@ public class XmlUserAccessor implements IUserAccessor{
         	 if(node.getNodeType() == Node.ELEMENT_NODE) {
         		 Element element = (Element) node;
         		 if(element.getElementsByTagName("researcher_name").item(0).getTextContent().equals(id)) {
-        			 System.out.print(id+" "+element.getElementsByTagName("researcher_name")+"\n\n\n");
         			 return true;
         		 }
         	 }
@@ -355,10 +357,14 @@ public class XmlUserAccessor implements IUserAccessor{
 
 	@Override
 	public boolean existsAllByIds(Collection<String> ids) {
-		for(String id : ids) {
-			if(!existsById(id)) return false;
+		if(ids != null) {
+			for(String id : ids) {
+				if(!existsById(id)) return false;
+			}
+			return true;
 		}
-		return true;
+		return false;
+		
 	}
 	
 

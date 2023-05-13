@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><researcherList>
-	<researcher id="1">
-		<researcher_name>tugkantuglular</researcher_name>
-		<password>12345</password>
-		<following_researcher_names>emrahinan</following_researcher_names>
-		<follower_researcher_names>buraktopcu</follower_researcher_names>
-	</researcher>
+	
 	<researcher id="2">
 		<researcher_name>dilekozturk</researcher_name>
 		<password>12345</password>
@@ -29,4 +24,4 @@
 		<following_researcher_names>tugkantuglular</following_researcher_names>
 		<follower_researcher_names/>
 	</researcher>
-</researcherList>
+<researcher id="87de9029-55ce-4e79-9803-eaa3bed1a38e"><researcher_name>berke111</researcher_name><password> </password><following_researcher_names> </following_researcher_names><follower_researcher_names> </follower_researcher_names></researcher></researcherList>

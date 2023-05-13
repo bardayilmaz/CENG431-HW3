@@ -38,14 +38,15 @@ public class Main {
 
 	public static void main(String[] args) {
 		IUserAccessor userAccessor = new XmlUserAccessor("src/main/resources/researchers.xml");
-		UserModel userModel = new UserModel("berke111", " ", new ArrayList<String>(), new ArrayList<String>());
 		
-		userAccessor.add(userModel);
-	
-		/*UserModel userModel = new UserModel()d
+		UserModel userModel = new UserModel();
         LoginView loginView = new LoginView(userModel);
         LoginController loginController = new LoginController(loginView, userModel);
-        loginView.setVisible(true);*/
+        loginController.setUserAccessor(userAccessor);
+        
+        loginView.setVisible(true);
+
+       
 	}
 	
 	private static List<String> getBibFiles() {

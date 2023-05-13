@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 
 public class LoginView extends JFrame implements Observer {
 
-	 private JLabel usernameLabel;
+	private JLabel usernameLabel;
     private JTextField usernameField;
     private JLabel passwordLabel;
     private JPasswordField passwordField;
