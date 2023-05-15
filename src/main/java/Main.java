@@ -46,24 +46,29 @@ public class Main {
 		
 		IPaperAccessor paperAccessor = new CsvPaperAccessor("src/main/resources/papers.csv");
 		writePapersToCsv();
+
+		IUserAccessor userAccessor = new XmlUserAccessor("src/main/resources/researchers.xml");
+
+		UserModel userModel = new UserModel();
+		LoginView loginView = new LoginView(userModel);
+
+		LoginController loginController = new LoginController(loginView, userModel);
+		loginController.setUserAccessor(userAccessor);
+		loginView.setVisible(true);
 		//for(APaper paper : paperAccessor.getAll()) {
 			//System.out.println(paper.getType() + paper.getAttributes());
 		//}
-		
+		/*
 		APaper paper = new ArticlePaper("article", Arrays.asList("a"), "xD", "xx2222222", "büşent", "cexap", "öhöm", "hm", 19225);
 		paperAccessor.add(paper);
 		paper.setDoi("sdfsdfsdf");
 		paperAccessor.update(paper);
+		 */
 		
 		//paperAccessor.add(paper);
 		/*
-		IUserAccessor userAccessor = new XmlUserAccessor("src/main/resources/researchers.xml");
-		
-		UserModel userModel = new UserModel();
-        LoginView loginView = new LoginView(userModel);
-        LoginController loginController = new LoginController(loginView, userModel);
-        //loginController.setUserAccessor(userAccessor);
-        //loginView.setVisible(true);
+
+
         
         IReadingListAccessor accessor = new JsonReadingListAccessor("src/main/resources/reading_lists.json");
         ReadingListModel readingListModel = new ReadingListModel("1", "tugkantuglularsssssssssssssssssssssssssssssssssssssssssssssssss", "zort", 1, new HashSet<>(Arrays.asList("hehe2", "hehe3")));

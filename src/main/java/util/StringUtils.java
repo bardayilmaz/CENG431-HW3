@@ -21,7 +21,7 @@ public class StringUtils {
 				return result.substring(0, result.length()-1);
 			}
 		}
-		return " "; // TODO this mf does not work, when giving "". So I give " ", brilliant.
+		return " ";
 	}
 	
 	public static boolean areElementsUnique(List<String> list) {
