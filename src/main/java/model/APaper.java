@@ -19,6 +19,15 @@ public abstract class APaper implements IPaper {
 		this.doi = doi;
 		this.downloadCount = 0;
 	}
+	
+	public APaper(String type, List<String> authors, String title, String year, String doi, int downloadCount) {
+		this.type = type;
+		this.authors = authors;
+		this.title = title;
+		this.year = year;
+		this.doi = doi;
+		this.downloadCount = downloadCount;
+	}
 
 	@Override
 	public String getTitle() {
@@ -32,6 +41,11 @@ public abstract class APaper implements IPaper {
 			authors = authors.concat(" " + author);
 		}
 		return authors.trim();
+	}
+	
+	@Override
+	public List<String> getAuthorList() {
+		return this.authors;
 	}
 
 	@Override
@@ -76,8 +90,5 @@ public abstract class APaper implements IPaper {
 
 	public void setType(String type) {
 		this.type = type;
-	}	
-	
-	
-	
+	}		
 }

@@ -15,6 +15,13 @@ public class ArticlePaper extends APaper {
 		this.volume = volume;
 		this.journal = journal;
 	}
+	
+	public ArticlePaper(String type, List<String> authors, String title, String year, String doi, String volume, String number, String journal, int downloadCount) {
+		super(type, authors, title, year, doi, downloadCount);
+		this.number = number;
+		this.volume = volume;
+		this.journal = journal;
+	}
 
 	@Override
 	public String getAttributes() {
@@ -23,7 +30,7 @@ public class ArticlePaper extends APaper {
 
 	@Override
 	public List<String> getAttributesForCsv() {
-		return Arrays.asList(getType(), getAuthors(), getTitle(), getYear(), getVolume(), getNumber(), getYear(), getDoi(), getJournal(), String.valueOf(getDownloadCount()));
+		return Arrays.asList(getType(), getAuthors(), getTitle(), getYear(), getVolume(), getNumber(), getDoi(), getJournal(), String.valueOf(getDownloadCount()));
 	}
 
 	public String getVolume() {

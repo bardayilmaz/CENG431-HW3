@@ -23,6 +23,8 @@ import test.SphereWindow;
 import model.*;
 import view.*;
 import controller.*;
+import data_access.CsvPaperAccessor;
+import data_access.IPaperAccessor;
 import data_access.IReadingListAccessor;
 import data_access.IUserAccessor;
 import data_access.JsonReadingListAccessor;
@@ -41,6 +43,20 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
+		
+		IPaperAccessor paperAccessor = new CsvPaperAccessor("src/main/resources/papers.csv");
+		writePapersToCsv();
+		//for(APaper paper : paperAccessor.getAll()) {
+			//System.out.println(paper.getType() + paper.getAttributes());
+		//}
+		
+		APaper paper = new ArticlePaper("article", Arrays.asList("a"), "xD", "xx2222222", "büşent", "cexap", "öhöm", "hm", 19225);
+		paperAccessor.add(paper);
+		paper.setDoi("sdfsdfsdf");
+		paperAccessor.update(paper);
+		
+		//paperAccessor.add(paper);
+		/*
 		IUserAccessor userAccessor = new XmlUserAccessor("src/main/resources/researchers.xml");
 		
 		UserModel userModel = new UserModel();
@@ -54,7 +70,7 @@ public class Main {
         accessor.update(readingListModel);
         ReadingListModel readingListModel2 = accessor.getById("1");
         System.out.println(readingListModel2.getName());
-        
+        */
         
 
        

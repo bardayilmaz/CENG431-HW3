@@ -1,5 +1,6 @@
 package util;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.List;
@@ -33,6 +34,10 @@ public class StringUtils {
 			return true;
 		}
 		return false;
+	}
+	
+	public static List<String> commaSeperatedToList(String csv) {
+		return Arrays.asList(csv.split(","));
 	}
 
 }

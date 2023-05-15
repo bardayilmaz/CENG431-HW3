@@ -11,6 +11,11 @@ public class ConferencePaper extends APaper {
 		super(type, authors, title, year, doi);
 		this.booktitle = bookTitle;
 	}
+	
+	public ConferencePaper(String type, List<String> authors, String title, String year, String doi, String bookTitle, int downloadCount) {
+		super(type, authors, title, year, doi, downloadCount);
+		this.booktitle = bookTitle;
+	}
 
 	@Override
 	public String getAttributes() {
@@ -19,7 +24,7 @@ public class ConferencePaper extends APaper {
 	
 	@Override
 	public List<String> getAttributesForCsv() {
-		return Arrays.asList(getType(), getAuthors(), getTitle(), getYear(), getYear(), getDoi(), getBooktitle(), String.valueOf(getDownloadCount()));
+		return Arrays.asList(getType(), getAuthors(), getTitle(), getYear(), getDoi(), getBooktitle(), String.valueOf(getDownloadCount()));
 	}
 
 	public String getBooktitle() {
