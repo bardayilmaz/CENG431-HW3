@@ -4,8 +4,12 @@
   <artifactId>G14.CENG431</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>G14_CENG431_HW3</name>
-  
-  <dependencies>
+	<properties>
+		<maven.compiler.source>19</maven.compiler.source>
+		<maven.compiler.target>19</maven.compiler.target>
+	</properties>
+
+    <dependencies>
   	<dependency>
 		<groupId>org.jbibtex</groupId>
 		<artifactId>jbibtex</artifactId>

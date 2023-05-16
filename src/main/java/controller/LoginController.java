@@ -42,12 +42,10 @@ public class LoginController implements ActionListener {
 
         if (model.isValidUser(username, password)) {
             // If valid, show the main menu view
-            JFrame JFrame = new MainMenuView(model);
-            MainMenuController mainMenuController = new MainMenuController(JFrame, model);
-
+            MainMenuView mainMenuView = new MainMenuView(model);
+            MainMenuController mainMenuController = new MainMenuController(mainMenuView, model);
             view.setVisible(false);
-
-            JFrame.setVisible(true);
+            mainMenuView.setVisible(true);
             view.clearFields();
             return true;
         } else {
