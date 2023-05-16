@@ -8,6 +8,7 @@ import view.MainMenuView;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.html.ListView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,13 +17,17 @@ public class MainMenuController implements ActionListener, ListSelectionListener
 	private UserModel model;
 	private IUserAccessor userAccessor;
 	private IDataAccessor dataAccessor;
-	private JList<String> listView;
+	private JList<String> followingView;
+	private JList<String> followerView;
 
 	public MainMenuController(MainMenuView view, UserModel model) {
 		this.view = view;
 		this.model = model;
-		this.listView = view.getListView();
-		this.listView.addListSelectionListener(this);
+		this.followingView = view.getFollowingView();
+		this.followerView = view.getFollowerView();
+
+		this.followingView.addListSelectionListener(this);
+		this.followerView.addListSelectionListener(this);
 	}
 
 	@Override
@@ -34,9 +39,10 @@ public class MainMenuController implements ActionListener, ListSelectionListener
 	public void valueChanged(ListSelectionEvent e) {
 		if (!e.getValueIsAdjusting()) {
 			// Handle the selected item
-			String selectedItem = listView.getSelectedValue();
+
 			// Do something with the selected item
-			System.out.println("Selected item: " + selectedItem);
+			System.out.println("Selected Follower: " + followerView.getSelectedValue());
+			System.out.println("Selected Follower: " + followingView.getSelectedValue());
 		}
 	}
 }
