@@ -38,8 +38,30 @@ public class JsonReadingListAccessor implements IReadingListAccessor {
         JSONArray readingLists = jsonObj.getJSONArray("readingLists");
         
         for (int i = 0; i < readingLists.length(); i++) {
-        	ReadingListModel readingListModel = fromJsonToReadingListModel(jsonObj);
+        	ReadingListModel readingListModel = fromJsonToReadingListModel(readingLists.getJSONObject(i));
         	result.add(readingListModel);
+        }
+		return result;
+	}
+	
+	@Override
+	public List<ReadingListModel> getAllByCreatorName(String name) {
+		List<ReadingListModel> result = new ArrayList<>();
+		String jsonStr = null;
+		try {
+			jsonStr = new String(Files.readAllBytes(Paths.get(this.path)), StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        JSONObject jsonObj = new JSONObject(jsonStr);
+        JSONArray readingLists = jsonObj.getJSONArray("readingLists");
+        
+        for (int i = 0; i < readingLists.length(); i++) {
+        	ReadingListModel readingListModel = fromJsonToReadingListModel(readingLists.getJSONObject(i));
+        	if(readingListModel.getCreatorResearcherName().equals(name)) {
+            	result.add(readingListModel);
+
+        	}
         }
 		return result;
 	}
@@ -58,6 +80,26 @@ public class JsonReadingListAccessor implements IReadingListAccessor {
         for (int i = 0; i < readingLists.length(); i++) {
             JSONObject currentReadingList = readingLists.getJSONObject(i);
             if (currentReadingList.getString("id").equals(id)) {
+            	return fromJsonToReadingListModel(currentReadingList);
+            }
+        }
+		return null;
+	}
+	
+	@Override
+	public ReadingListModel getByName(String name) {
+		String jsonStr = null;
+		try {
+			jsonStr = new String(Files.readAllBytes(Paths.get(this.path)), StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        JSONObject jsonObj = new JSONObject(jsonStr);
+        JSONArray readingLists = jsonObj.getJSONArray("readingLists");
+        
+        for (int i = 0; i < readingLists.length(); i++) {
+            JSONObject currentReadingList = readingLists.getJSONObject(i);
+            if (currentReadingList.getString("name").equals(name)) {
             	return fromJsonToReadingListModel(currentReadingList);
             }
         }
@@ -83,6 +125,7 @@ public class JsonReadingListAccessor implements IReadingListAccessor {
                 currentReadingList.put("name", data.getName());
                 currentReadingList.put("numberOfPapers", data.getNumberOfPapers());
                 currentReadingList.put("paperTitles", new JSONArray(data.getPaperTitles()));
+                System.err.println(data.getPaperTitles());
                 break;
             }
         }
@@ -180,13 +223,36 @@ public class JsonReadingListAccessor implements IReadingListAccessor {
 		ReadingListModel readingListModel = new ReadingListModel();
 		readingListModel.setId(jsonObject.getString("id"));
 		 readingListModel.setName(jsonObject.getString("name"));
+		 readingListModel.setCreatorResearcherName(jsonObject.getString("creatorResearcherName"));
          int numberOfPapers = jsonObject.getInt("numberOfPapers");
          Set<String> paperTitles = new HashSet<>();
          JSONArray paperTitlesArray = jsonObject.getJSONArray("paperTitles");
          for (int j = 0; j < paperTitlesArray.length(); j++) {
              paperTitles.add(paperTitlesArray.getString(j));
          }
+         readingListModel.setPaperTitles(paperTitles);
          return readingListModel;
 	}
+
+	@Override
+	public boolean existByName(String name) {
+		String jsonStr = null;
+		try {
+			jsonStr = new String(Files.readAllBytes(Paths.get(this.path)), StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        JSONObject jsonObj = new JSONObject(jsonStr);
+        JSONArray readingLists = jsonObj.getJSONArray("readingLists");
+        
+        for (int i = 0; i < readingLists.length(); i++) {
+            JSONObject currentReadingList = readingLists.getJSONObject(i);
+            if (currentReadingList.getString("name").equals(name)) {
+            	return true;
+            }
+        }
+		return false;
+	}
+
 
 }

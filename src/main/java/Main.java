@@ -45,15 +45,23 @@ public class Main {
 	public static void main(String[] args) {
 		
 		IPaperAccessor paperAccessor = new CsvPaperAccessor("src/main/resources/papers.csv");
-		writePapersToCsv();
+		//writePapersToCsv();
 
 		IUserAccessor userAccessor = new XmlUserAccessor("src/main/resources/researchers.xml");
+		IReadingListAccessor readingListAccessor = new JsonReadingListAccessor("src/main/resources/reading_lists.json");
+		ReadingListModel readingListModel = readingListAccessor.getById("1");
+		readingListModel.setName("degistim");
+		readingListModel.setCreatorResearcherName("ahahahahh");
+		Set<String> set = readingListModel.getPaperTitles();
+		//System.out.println(set);
+		//System.out.println(set.remove("On the Effectiveness of Unit Tests in Test-Driven Development"));
+		//readingListModel.setPaperTitles(set);
+		readingListAccessor.update(readingListModel);
 
 		UserModel userModel = new UserModel();
 		LoginView loginView = new LoginView(userModel);
 
-		LoginController loginController = new LoginController(loginView, userModel);
-		loginController.setUserAccessor(userAccessor);
+		LoginController loginController = new LoginController(loginView, userModel, userAccessor);
 		loginView.setVisible(true);
 		//for(APaper paper : paperAccessor.getAll()) {
 			//System.out.println(paper.getType() + paper.getAttributes());

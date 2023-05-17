@@ -135,7 +135,7 @@ public class XmlUserAccessor implements IUserAccessor{
         			 continue;
         		 }
         		 if(! (existsAllByIds(data.getFollowerUsers()) && existsAllByIds(data.getFollowingUsers()))) {
-        			 throw new RuntimeException("Invalid user list");
+        			 throw new RuntimeException("Invalid user list " + data.getFollowerUsers() + ", " + data.getFollowingUsers());
         		 }
         		 if(!StringUtils.areElementsUnique(data.getFollowerUsers()) || !StringUtils.areElementsUnique(data.getFollowingUsers())) {
         			 throw new RuntimeException("There are duplicates!");

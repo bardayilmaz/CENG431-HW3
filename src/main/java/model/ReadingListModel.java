@@ -1,17 +1,16 @@
 package model;
 
 import java.util.Objects;
+import java.util.Observable;
 import java.util.Set;
 
-public class ReadingListModel {
+public class ReadingListModel extends Observable {
 
 	private String id;
 	private String creatorResearcherName;
 	private String name;
 	private int numberOfPapers;
 	private Set<String> paperTitles;
-	
-	
 	
 	public ReadingListModel() {
 		this.id = null;
@@ -89,4 +88,11 @@ public class ReadingListModel {
 				&& Objects.equals(name, other.name) && numberOfPapers == other.numberOfPapers
 				&& Objects.equals(paperTitles, other.paperTitles);
 	}
+
+	@Override
+	public String toString() {
+		return "ReadingListModel [id=" + id + ", name=" + name + "]";
+	}
+	
+	
 }

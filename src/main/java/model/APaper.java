@@ -1,8 +1,9 @@
 package model;
 
 import java.util.List;
+import java.util.Observable;
 
-public abstract class APaper implements IPaper {
+public abstract class APaper extends Observable implements IPaper {
 
 	private List<String> authors;
 	private String title;
@@ -46,6 +47,13 @@ public abstract class APaper implements IPaper {
 	@Override
 	public List<String> getAuthorList() {
 		return this.authors;
+	}
+
+	
+	
+	@Override
+	public String toString() {
+		return getAttributes();
 	}
 
 	@Override

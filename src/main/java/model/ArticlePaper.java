@@ -25,7 +25,7 @@ public class ArticlePaper extends APaper {
 
 	@Override
 	public String getAttributes() {
-		return getYear() + ", " + this.journal + ", Volume " + this.volume + ", Number " + this.number + ", DOI:" + getDoi();
+		return getYear() + ", " + ", Title:  " + getTitle() + "Volume " + this.volume + ", Number " + this.number + ", DOI:" + getDoi() + "Journal: " + this.getJournal();
 	}
 
 	@Override

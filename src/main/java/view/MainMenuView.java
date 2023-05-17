@@ -78,7 +78,7 @@ public class MainMenuView extends JFrame implements Observer {
     private JList<String> createListView(List<String> listString) {
         // Create a DefaultListModel and add the items to it
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        for (String user : listString ) {
+        for (String user : listString) {
             listModel.addElement(user);
         }
         // Create the JList and set its model

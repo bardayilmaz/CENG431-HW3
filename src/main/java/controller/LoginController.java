@@ -7,6 +7,7 @@ import data_access.IUserAccessor;
 import model.UserModel;
 import view.LoginView;
 import view.MainMenuView;
+import view.MainMenuView2;
 
 import javax.swing.*;
 
@@ -15,9 +16,10 @@ public class LoginController implements ActionListener {
     private UserModel model;
     private IUserAccessor userAccessor;
 
-    public LoginController(LoginView view, UserModel model) {
+    public LoginController(LoginView view, UserModel model, IUserAccessor userAccessor) {
         this.view = view;
         this.model = model;
+        this.userAccessor = userAccessor;
 
         // Add action listener for the login button
         view.addLoginListener(this);
@@ -32,7 +34,7 @@ public class LoginController implements ActionListener {
                 // Check if the username and password are valid
                 performLogin(username, password);
             } else {
-                view.showErrorMessage("The user is not signed up");
+                view.showErrorMessage("User does not exists");
             }
 
         }
@@ -40,10 +42,13 @@ public class LoginController implements ActionListener {
 
     private boolean performLogin(String username, String password) {
 
-        if (model.isValidUser(username, password)) {
+    	UserModel user = userAccessor.getById(username);
+        if (user.isValidUser(username, password)) {
             // If valid, show the main menu view
-            MainMenuView mainMenuView = new MainMenuView(model);
-            MainMenuController mainMenuController = new MainMenuController(mainMenuView, model);
+            
+            MainMenuController2  mainMenuController = new MainMenuController2(user);
+            MainMenuView2 mainMenuView = new MainMenuView2(mainMenuController);
+            mainMenuController.setView(mainMenuView);
             view.setVisible(false);
             mainMenuView.setVisible(true);
             view.clearFields();
@@ -61,12 +66,7 @@ public class LoginController implements ActionListener {
     }
 
     private boolean isUserInDB(String userName, IUserAccessor userAccessor) {
-        UserModel user = userAccessor.getById(userName);
-        if (user != null) {
-            model = new UserModel(user);
-            return true;
-        }
-        return false;
+        return userAccessor.existsById(userName);
     }
 
 }

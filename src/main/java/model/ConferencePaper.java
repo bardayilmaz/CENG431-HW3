@@ -19,7 +19,7 @@ public class ConferencePaper extends APaper {
 
 	@Override
 	public String getAttributes() {
-		return getYear() + ", " + this.booktitle + ", DOI:" + getDoi();
+		return getYear() + ", Title:" + this.getTitle() + "Book Title: " + this.booktitle + ", DOI:" + getDoi();
 	}
 	
 	@Override
