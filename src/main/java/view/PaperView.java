@@ -11,11 +11,13 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
+import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import controller.PaperController;
 import model.APaper;
@@ -32,6 +34,8 @@ public class PaperView extends JFrame implements Observer {
     private JTextArea readingListContent;
     private JButton addButton;
     private JButton removeButton;
+    private JButton downloadButtton;
+    private JLabel downloadMessageLabel;
 	
 	public PaperView(PaperController paperController) {
 		this.paperController = paperController;
@@ -69,8 +73,12 @@ public class PaperView extends JFrame implements Observer {
 
         addButton = new JButton("Add to Reading List");
         removeButton = new JButton("Remove from Reading List");
+        downloadButtton = new JButton("Download selected paper");
+        downloadMessageLabel = new JLabel();
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.add(downloadButtton);
+        buttonPanel.add(downloadMessageLabel);
         buttonPanel.add(addButton);
         buttonPanel.add(removeButton);
         add(buttonPanel, BorderLayout.SOUTH);
@@ -102,6 +110,13 @@ public class PaperView extends JFrame implements Observer {
             if (selectedPaper != null && selectedReadingList != null) {
             	paperController.handleRemoveFromReadingList(selectedPaper, selectedReadingList);
             }
+        });
+        
+        downloadButtton.addActionListener(e -> {
+        	String selectedPaper = paperList.getSelectedValue().getTitle();
+        	if(selectedPaper != null) {
+        		paperController.handleDownloadPaper(selectedPaper);
+        	}
         });
 
         setVisible(true);
@@ -157,7 +172,13 @@ public class PaperView extends JFrame implements Observer {
 		}
 		
 	}
-	
-	
+
+	public JLabel getDownloadMessageLabel() {
+		return downloadMessageLabel;
+	}
+
+	public void setDownloadMessageLabel(JLabel downloadMessageLabel) {
+		this.downloadMessageLabel = downloadMessageLabel;
+	}
 
 }

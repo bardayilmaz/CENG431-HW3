@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.Set;
 
@@ -110,6 +111,22 @@ public class PaperController {
 			System.out.println(readingListModel.getPaperTitles());
 			this.view.update(readingListModel, readingListModel);
 			this.handleReadlingListSelection(readingListModel);
+		}
+		
+	}
+
+	
+	public void handleDownloadPaper(String selectedPaper) {
+		APaper paper = paperAccessor.getById(selectedPaper);
+		if(paper != null) {
+			paper.setDownloadCount(paper.getDownloadCount()+1);
+			paperAccessor.update(paper);
+			this.view.getDownloadMessageLabel().setForeground(Color.BLACK);
+			this.view.getDownloadMessageLabel().setText("Download Succesfull");
+		}
+		else {
+			this.view.getDownloadMessageLabel().setForeground(Color.RED);
+			this.view.getDownloadMessageLabel().setText("Download unsuccesfull");
 		}
 		
 	}

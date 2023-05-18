@@ -31,7 +31,7 @@ public class MainMenuView2 extends JFrame {
 	}
 	
 	 private void initializeComponents() {
-	        button1 = new JButton("View Papers & Your Reading Lists");
+	        button1 = new JButton("View Papers to Download & Your Reading Lists");
 	        button2 = new JButton("View Researchers");
 	        button3 = new JButton("View All Reading Lists");
 	        button5 = new JButton("Create Reading List");
