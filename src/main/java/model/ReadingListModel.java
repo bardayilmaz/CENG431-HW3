@@ -91,7 +91,7 @@ public class ReadingListModel extends Observable {
 
 	@Override
 	public String toString() {
-		return "ReadingListModel [id=" + id + ", name=" + name + "]";
+		return id+" "+name;
 	}
 	
 	

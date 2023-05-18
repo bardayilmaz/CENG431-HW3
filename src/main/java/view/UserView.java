@@ -22,11 +22,12 @@ import model.UserModel;
 
 public class UserView extends JFrame implements Observer{
 
-	  private JList<String> allUsersList;
+	    private JList<String> allUsersList;
 	    private JList<String> followingUsersList;
 	    private JList<String> followerUsersList;
 	    private JButton followButton;
 	    private JButton unfollowButton;
+		private JButton backButton;
 	    private UserController userController;
 
 	    public UserView(UserController userController) {
@@ -46,13 +47,14 @@ public class UserView extends JFrame implements Observer{
 	        followerUsersList = new JList<>();
 	        followButton = new JButton("Follow");
 	        unfollowButton = new JButton("Unfollow");
+            backButton = new JButton("Go Back");
 	    }
 
 	    private void createLayout() {
 	        JPanel allUsers = new JPanel(new BorderLayout());
 	        allUsers.add(new JScrollPane(allUsersList), BorderLayout.CENTER);
 	        allUsers.add(followButton, BorderLayout.SOUTH);
-	        
+
 	        JPanel headerPanel = new JPanel();
 	        headerPanel.setBackground(Color.lightGray);
 	        headerPanel.setPreferredSize(new Dimension(getWidth(), 30));
@@ -62,34 +64,36 @@ public class UserView extends JFrame implements Observer{
 	        JPanel leftPanel = new JPanel(new BorderLayout());
 	        leftPanel.add(headerPanel, BorderLayout.NORTH);
 	        leftPanel.add(allUsers, BorderLayout.CENTER);
-	        
+
 	        JPanel followingUsersPanel = new JPanel(new BorderLayout());
 	        followingUsersPanel.add(new JScrollPane(followingUsersList), BorderLayout.CENTER);
 	        followingUsersPanel.add(unfollowButton, BorderLayout.SOUTH);
-	        
+
 	        JPanel followingUsersHeaderPanel = new JPanel();
 	        followingUsersHeaderPanel.setBackground(Color.lightGray);
 	        followingUsersHeaderPanel.setPreferredSize(new Dimension(getWidth(), 30));
 	        JLabel followingUsersHeaderLabel= new JLabel("Following Users");
 	        followingUsersHeaderPanel.add(followingUsersHeaderLabel);
-	        
+
 	        JPanel centerPanel = new JPanel(new BorderLayout());
 	        centerPanel.add(followingUsersHeaderPanel, BorderLayout.NORTH);
 	        centerPanel.add(followingUsersPanel, BorderLayout.CENTER);
 
 	        JPanel followerUsersPanel = new JPanel(new BorderLayout());
 	        followerUsersPanel.add(new JScrollPane(followerUsersList), BorderLayout.CENTER);
+            followerUsersPanel.add(backButton,BorderLayout.SOUTH);
 
 	        JPanel followerUsersHeaderPanel = new JPanel();
 	        followerUsersHeaderPanel.setBackground(Color.lightGray);
 	        followerUsersHeaderPanel.setPreferredSize(new Dimension(getWidth(), 30));
 	        JLabel followerUsersHeaderLabel= new JLabel("Follower Users");
 	        followerUsersHeaderPanel.add(followerUsersHeaderLabel);
-	        
+
+
 	        JPanel rightPanel = new JPanel(new BorderLayout());
 	        rightPanel.add(followerUsersHeaderPanel, BorderLayout.NORTH);
 	        rightPanel.add(followerUsersPanel, BorderLayout.CENTER);
-	        
+
 	        JPanel mainPanel = new JPanel(new GridLayout(1, 3));
 	        mainPanel.add(leftPanel);
 	        mainPanel.add(centerPanel);
@@ -130,14 +134,20 @@ public class UserView extends JFrame implements Observer{
 	        return unfollowButton;
 	    }
 
+		public JButton getBackButton() {
+			return backButton;
+		}
+
 	    public void followListener(ActionListener listener) {
 	    	followButton.addActionListener(listener);
 	    }
-	    
+
 	    public void unfollowListener(ActionListener listener) {
 	    	unfollowButton.addActionListener(listener);
 	    }
-	    
+
+        public void backButtonListener(ActionListener listener) {backButton.addActionListener(listener);}
+
 	    @Override
 	    public void update(Observable o, Object arg) {
 	        // Update the view when the observable UserModel changes
@@ -172,6 +182,6 @@ public class UserView extends JFrame implements Observer{
 			this.followerUsersList = followerUsersList;
 		}
 
-	    
-	    
+
+
 }

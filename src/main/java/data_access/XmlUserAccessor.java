@@ -140,8 +140,16 @@ public class XmlUserAccessor implements IUserAccessor{
         		 if(!StringUtils.areElementsUnique(data.getFollowerUsers()) || !StringUtils.areElementsUnique(data.getFollowingUsers())) {
         			 throw new RuntimeException("There are duplicates!");
         		 }
-        		 element.getElementsByTagName("following_researcher_names").item(0).setTextContent(StringUtils.listToCommaSeperatedString(data.getFollowingUsers()));
-                 element.getElementsByTagName("follower_researcher_names").item(0).setTextContent(StringUtils.listToCommaSeperatedString(data.getFollowerUsers()));
+        		 String following_researcher_names = StringUtils.fixXmlWhiteSpace(String.valueOf(element.getElementsByTagName("following_researcher_names").item(0)));
+				 		//.setTextContent(StringUtils.listToCommaSeperatedString(data.getFollowingUsers()));
+				 element.getElementsByTagName("following_researcher_names").item(0).setTextContent(following_researcher_names);
+				 element.getElementsByTagName("following_researcher_names").item(0).setTextContent(StringUtils.listToCommaSeperatedString(data.getFollowingUsers()));
+				 String follower_researcher_names = StringUtils.fixXmlWhiteSpace(String.valueOf(element.getElementsByTagName("follower_researcher_names").item(0)));
+						 //.setTextContent(StringUtils.listToCommaSeperatedString(data.getFollowerUsers()));
+				 element.getElementsByTagName("follower_researcher_names").item(0).setTextContent(follower_researcher_names);
+				 element.getElementsByTagName("follower_researcher_names").item(0).setTextContent(StringUtils.listToCommaSeperatedString(data.getFollowerUsers()));
+
+
         		 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                  Transformer transformer = null;
 				try {
@@ -325,6 +333,9 @@ public class XmlUserAccessor implements IUserAccessor{
 	public boolean existsAllByIds(Collection<String> ids) {
 		if(ids != null) {
 			for(String id : ids) {
+				if(id.equals(" ")){
+					continue;
+				}
 				if(!existsById(id)) return false;
 			}
 			return true;

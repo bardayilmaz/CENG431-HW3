@@ -6,10 +6,7 @@ import java.awt.event.ActionListener;
 import data_access.IUserAccessor;
 import model.UserModel;
 import view.LoginView;
-import view.MainMenuView;
 import view.MainMenuView2;
-
-import javax.swing.*;
 
 public class LoginController implements ActionListener {
     private LoginView view;

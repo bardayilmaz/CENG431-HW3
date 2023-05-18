@@ -75,9 +75,7 @@ public class UserModel extends Observable {
 
 	@Override
 	public String toString() {
-		return "User:\n "
-				+ "Username=" + username + ", FollowingUsers=" + followingUsers + ", FollowerUsers="
-				+ followerUsers ;
+		return username;
 	}
     
     

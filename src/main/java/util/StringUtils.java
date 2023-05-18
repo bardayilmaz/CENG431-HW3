@@ -40,4 +40,7 @@ public class StringUtils {
 		return Arrays.asList(csv.split(","));
 	}
 
+	public static String fixXmlWhiteSpace(String str){
+		return str.equals(" ") ? "" : str;
+	}
 }

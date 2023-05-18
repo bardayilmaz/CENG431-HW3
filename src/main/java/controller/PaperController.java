@@ -9,6 +9,7 @@ import data_access.IReadingListAccessor;
 import model.APaper;
 import model.ReadingListModel;
 import model.UserModel;
+import view.MainMenuView2;
 import view.PaperView;
 
 public class PaperController {
@@ -73,7 +74,6 @@ public class PaperController {
 
 	public void handlePaperSelection(String selectedValue) {
 		this.view.setSelectedPaperTitle(selectedValue);
-		
 	}
 
 	public void handleAddToReadingList(String selectedPaper, String selectedReadingList) {
@@ -129,6 +129,14 @@ public class PaperController {
 			this.view.getDownloadMessageLabel().setText("Download unsuccesfull");
 		}
 		
+	}
+
+	public void handleGoBack(){
+		view.setVisible(false);
+		MainMenuController2  mainMenuController = new MainMenuController2(currentUser);
+		MainMenuView2 mainMenuView = new MainMenuView2(mainMenuController);
+		mainMenuController.setView(mainMenuView);
+		mainMenuView.setVisible(true);
 	}
 	
 	

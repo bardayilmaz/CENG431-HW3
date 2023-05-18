@@ -35,13 +35,15 @@ public class PaperView extends JFrame implements Observer {
     private JButton addButton;
     private JButton removeButton;
     private JButton downloadButtton;
+    private JButton backButton;
     private JLabel downloadMessageLabel;
 	
 	public PaperView(PaperController paperController) {
 		this.paperController = paperController;
-		this.paperController = paperController;
         setTitle("Paper Viewer");
-        setSize(600, 400);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setUndecorated(false);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -75,12 +77,14 @@ public class PaperView extends JFrame implements Observer {
         removeButton = new JButton("Remove from Reading List");
         downloadButtton = new JButton("Download selected paper");
         downloadMessageLabel = new JLabel();
+        backButton = new JButton("Main Menu");
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.add(downloadButtton);
         buttonPanel.add(downloadMessageLabel);
         buttonPanel.add(addButton);
         buttonPanel.add(removeButton);
+        buttonPanel.add(backButton);
         add(buttonPanel, BorderLayout.SOUTH);
 
         paperList.addListSelectionListener(e -> {
@@ -97,7 +101,7 @@ public class PaperView extends JFrame implements Observer {
 
         addButton.addActionListener(e -> {
             String selectedPaper = paperList.getSelectedValue().getTitle();
-            String selectedReadingList = readingList.getSelectedValue().getId();
+                String selectedReadingList = readingList.getSelectedValue().getId();
             System.out.println(selectedReadingList);
             if (selectedPaper != null && selectedReadingList != null) {
             	paperController.handleAddToReadingList(selectedPaper, selectedReadingList);
@@ -119,6 +123,9 @@ public class PaperView extends JFrame implements Observer {
         	}
         });
 
+        backButton.addActionListener(e ->{
+            paperController.handleGoBack();
+        });
         setVisible(true);
     }
 

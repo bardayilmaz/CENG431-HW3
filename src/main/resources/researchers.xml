@@ -3,30 +3,30 @@
 		<researcher_name>tugkantuglular</researcher_name>
 		<password>12345</password>
 		<following_researcher_names>emrahinan</following_researcher_names>
-		<follower_researcher_names>dilekozturk,buraktopcu</follower_researcher_names>
+		<follower_researcher_names>dilekozturk</follower_researcher_names>
 	</researcher>
 	<researcher id="2">
 		<researcher_name>dilekozturk</researcher_name>
 		<password>12345</password>
 		<following_researcher_names>tugkantuglular</following_researcher_names>
-		<follower_researcher_names/>
+		<follower_researcher_names> ,buraktopcu</follower_researcher_names>
 	</researcher>
 	<researcher id="3">
 		<researcher_name>emrahinan</researcher_name>
 		<password>12345</password>
-		<following_researcher_names/>
+		<following_researcher_names> </following_researcher_names>
 		<follower_researcher_names>tugkantuglular</follower_researcher_names>
 	</researcher>
 	<researcher id="4">
 		<researcher_name>serhatcaner</researcher_name>
 		<password>12345</password>
 		<following_researcher_names>buraktopcu</following_researcher_names>
-		<follower_researcher_names/>
+		<follower_researcher_names> </follower_researcher_names>
 	</researcher>
 	<researcher id="5">
 		<researcher_name>buraktopcu</researcher_name>
 		<password>12345</password>
-		<following_researcher_names>tugkantuglular</following_researcher_names>
+		<following_researcher_names>dilekozturk</following_researcher_names>
 		<follower_researcher_names>serhatcaner</follower_researcher_names>
 	</researcher>
-<researcher id="87de9029-55ce-4e79-9803-eaa3bed1a38e"><researcher_name>berke111</researcher_name><password> </password><following_researcher_names> </following_researcher_names><follower_researcher_names> </follower_researcher_names></researcher></researcherList>
+</researcherList>
