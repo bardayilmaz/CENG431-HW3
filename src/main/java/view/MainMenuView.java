@@ -8,18 +8,18 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import controller.MainMenuController2;
+import controller.MainMenuController;
 
-public class MainMenuView2 extends JFrame {
+public class MainMenuView extends JFrame {
 
-	 private MainMenuController2 controller;
+	 private MainMenuController controller;
 	    private JButton button1;
 	    private JButton button2;
 	    private JButton button3;
 	    private JButton button4;
 	    private JButton button5;
 	    
-	public MainMenuView2(MainMenuController2 controller) {
+	public MainMenuView(MainMenuController controller) {
 		 this.controller = controller;
 
 	        setTitle("Main Menu");
@@ -40,35 +40,35 @@ public class MainMenuView2 extends JFrame {
 	        button1.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	                controller.handleButton1Click();
+	                controller.handlePaperListButton();
 	            }
 	        });
 
 	        button2.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	                controller.handleButton2Click();
+	                controller.handleResearcherListButton();
 	            }
 	        });
 
 	        button3.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	                controller.handleButton3Click();
+	                controller.handleAllReadingListsButton();
 	            }
 	        });
 
 	        button4.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	                controller.handleButton4Click();
+	                controller.handleExitButton();
 	            }
 	        });
 	        
 	        button5.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	                controller.handleButton5Click();
+	                controller.handleCreateReadingListButton();
 	            }
 	        });
 

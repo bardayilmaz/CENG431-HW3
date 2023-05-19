@@ -10,7 +10,7 @@ import data_access.IReadingListAccessor;
 import model.ReadingListModel;
 import model.UserModel;
 import view.CreateReadingListView;
-import view.MainMenuView2;
+import view.MainMenuView;
 
 public class CreateReadingListController implements ActionListener {
 
@@ -44,8 +44,8 @@ public class CreateReadingListController implements ActionListener {
 			}
 		} else if (e.getSource() == this.view.getBackButton()) {
 			setVisible(false);
-			 MainMenuController2  mainMenuController = new MainMenuController2(currentUser);
-			 MainMenuView2 mainMenuView = new MainMenuView2(mainMenuController);
+			 MainMenuController mainMenuController = new MainMenuController(currentUser);
+			 MainMenuView mainMenuView = new MainMenuView(mainMenuController);
 	         mainMenuController.setView(mainMenuView);
 	         mainMenuView.setVisible(true);
 		}

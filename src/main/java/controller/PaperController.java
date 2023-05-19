@@ -9,7 +9,7 @@ import data_access.IReadingListAccessor;
 import model.APaper;
 import model.ReadingListModel;
 import model.UserModel;
-import view.MainMenuView2;
+import view.MainMenuView;
 import view.PaperView;
 
 public class PaperController {
@@ -103,12 +103,10 @@ public class PaperController {
 		ReadingListModel readingListModel = readingListAccessor.getById(selectedReadingList);
 		if(paperAccessor.existsById(selectedPaper)) {
 			Set<String> paperTitles = readingListModel.getPaperTitles();
-			System.out.println(selectedPaper);
 			paperTitles.remove(selectedPaper);
 			readingListModel.setPaperTitles(paperTitles);
 			readingListModel.setNumberOfPapers(readingListModel.getNumberOfPapers()-1);
 			readingListAccessor.update(readingListModel);
-			System.out.println(readingListModel.getPaperTitles());
 			this.view.update(readingListModel, readingListModel);
 			this.handleReadlingListSelection(readingListModel);
 		}
@@ -133,8 +131,8 @@ public class PaperController {
 
 	public void handleGoBack(){
 		view.setVisible(false);
-		MainMenuController2  mainMenuController = new MainMenuController2(currentUser);
-		MainMenuView2 mainMenuView = new MainMenuView2(mainMenuController);
+		MainMenuController mainMenuController = new MainMenuController(currentUser);
+		MainMenuView mainMenuView = new MainMenuView(mainMenuController);
 		mainMenuController.setView(mainMenuView);
 		mainMenuView.setVisible(true);
 	}

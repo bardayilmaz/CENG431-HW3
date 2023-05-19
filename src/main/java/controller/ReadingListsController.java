@@ -3,7 +3,7 @@ package controller;
 import data_access.*;
 import model.ReadingListModel;
 import model.UserModel;
-import view.MainMenuView2;
+import view.MainMenuView;
 import view.ReadingListsView;
 
 import java.awt.event.ActionEvent;
@@ -56,15 +56,14 @@ public class ReadingListsController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.view.getBackButton()) {
-            System.out.println("dasdasd");
             handleGoBack();
         }
     }
 
     public void handleGoBack() {
         view.setVisible(false);
-        MainMenuController2 mainMenuController = new MainMenuController2(currentUser);
-        MainMenuView2 mainMenuView = new MainMenuView2(mainMenuController);
+        MainMenuController mainMenuController = new MainMenuController(currentUser);
+        MainMenuView mainMenuView = new MainMenuView(mainMenuController);
         mainMenuController.setView(mainMenuView);
         mainMenuView.setVisible(true);
     }

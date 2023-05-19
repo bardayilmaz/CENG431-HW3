@@ -65,10 +65,8 @@ public class CsvPaperAccessor implements IPaperAccessor {
 	            for (CSVRecord record : parser) {
 	                String recordTitle = record.get(2);
 	                if (recordTitle.equalsIgnoreCase(data.getTitle())) {
-	                	System.out.println("here");
 	                    papers.add(data);
 	                } else {
-	                	System.out.println("not here");
 	                    papers.add(converter.convert(record));
 	                }
 	            }
@@ -77,7 +75,6 @@ public class CsvPaperAccessor implements IPaperAccessor {
 	            FileWriter fileWriter = new FileWriter(filePath);
 	            CSVPrinter printer = new CSVPrinter(fileWriter, CSVFormat.DEFAULT);
 	            for (APaper paper : papers) {
-	            	System.out.println(paper.getAttributesForCsv());
 	                printer.printRecord(paper.getAttributesForCsv());
 	                printer.flush();
 	            }
@@ -113,9 +110,7 @@ public class CsvPaperAccessor implements IPaperAccessor {
 
 	            for (CSVRecord record : parser) {
 	                String recordTitle = record.get(2);
-	                System.out.println("check");
 	                if (!recordTitle.equalsIgnoreCase(id)) {
-	                	System.out.println("added");
 	                    papers.add(converter.convert(record));
 	                } else {
 	                	result = converter.convert(record);
@@ -126,7 +121,6 @@ public class CsvPaperAccessor implements IPaperAccessor {
 				CSVPrinter printer = new CSVPrinter(fileWriter, CSVFormat.DEFAULT);
 				
 	            for (APaper paper : papers) {
-	            	System.out.println("wrote");
 	                printer.printRecord(paper.getAttributesForCsv());
 	            }
 	            return result;

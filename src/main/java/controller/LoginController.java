@@ -6,18 +6,16 @@ import java.awt.event.ActionListener;
 import data_access.IUserAccessor;
 import model.UserModel;
 import view.LoginView;
-import view.MainMenuView2;
+import view.MainMenuView;
 
 public class LoginController implements ActionListener {
     private LoginView view;
     private UserModel model;
     private IUserAccessor userAccessor;
 
-    public LoginController(LoginView view, UserModel model, IUserAccessor userAccessor) {
+    public LoginController(LoginView view, IUserAccessor userAccessor) {
         this.view = view;
-        this.model = model;
         this.userAccessor = userAccessor;
-
         // Add action listener for the login button
         view.addLoginListener(this);
     }
@@ -38,17 +36,14 @@ public class LoginController implements ActionListener {
     }
 
     private boolean performLogin(String username, String password) {
-
-    	UserModel user = userAccessor.getById(username);
-        if (user.isValidUser(username, password)) {
+    	model = userAccessor.getById(username);
+        if (model.isValidUser(username, password)) {
             // If valid, show the main menu view
-            
-            MainMenuController2  mainMenuController = new MainMenuController2(user);
-            MainMenuView2 mainMenuView = new MainMenuView2(mainMenuController);
-            mainMenuController.setView(mainMenuView);
-            view.setVisible(false);
-            mainMenuView.setVisible(true);
-            view.clearFields();
+            MainMenuController mainMenuController = new MainMenuController(model);
+            mainMenuController.setView(new MainMenuView(mainMenuController));
+            this.view.setVisible(false);
+            this.view.clearFields();
+            mainMenuController.setViewVisible(true);
             return true;
         } else {
             // If invalid, show an error message

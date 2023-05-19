@@ -125,7 +125,6 @@ public class JsonReadingListAccessor implements IReadingListAccessor {
                 currentReadingList.put("name", data.getName());
                 currentReadingList.put("numberOfPapers", data.getNumberOfPapers());
                 currentReadingList.put("paperTitles", new JSONArray(data.getPaperTitles()));
-                System.err.println(data.getPaperTitles());
                 break;
             }
         }

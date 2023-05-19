@@ -38,7 +38,6 @@ public class UserView extends JFrame implements Observer{
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        pack();
 	        setLocationRelativeTo(null);
-	        setVisible(true);
 	    }
 
 	    private void initializeComponents() {

@@ -3,7 +3,7 @@
 		<researcher_name>tugkantuglular</researcher_name>
 		<password>12345</password>
 		<following_researcher_names>emrahinan</following_researcher_names>
-		<follower_researcher_names>dilekozturk</follower_researcher_names>
+		<follower_researcher_names>dilekozturk,buraktopcu</follower_researcher_names>
 	</researcher>
 	<researcher id="2">
 		<researcher_name>dilekozturk</researcher_name>
@@ -26,7 +26,7 @@
 	<researcher id="5">
 		<researcher_name>buraktopcu</researcher_name>
 		<password>12345</password>
-		<following_researcher_names>dilekozturk</following_researcher_names>
+		<following_researcher_names>dilekozturk,tugkantuglular</following_researcher_names>
 		<follower_researcher_names>serhatcaner</follower_researcher_names>
 	</researcher>
 </researcherList>

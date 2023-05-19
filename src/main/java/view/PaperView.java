@@ -102,7 +102,6 @@ public class PaperView extends JFrame implements Observer {
         addButton.addActionListener(e -> {
             String selectedPaper = paperList.getSelectedValue().getTitle();
                 String selectedReadingList = readingList.getSelectedValue().getId();
-            System.out.println(selectedReadingList);
             if (selectedPaper != null && selectedReadingList != null) {
             	paperController.handleAddToReadingList(selectedPaper, selectedReadingList);
             }
@@ -164,7 +163,6 @@ public class PaperView extends JFrame implements Observer {
 				if(curr.getId().equals(readingListModel.getId())) {
 					curr = readingListModel;
 					this.readingListModel.setElementAt(curr, i);
-					System.out.println("here");
 				}
 			}
 		} else if (o instanceof APaper) {

@@ -6,7 +6,7 @@ import java.util.List;
 
 import data_access.IUserAccessor;
 import model.UserModel;
-import view.MainMenuView2;
+import view.MainMenuView;
 import view.UserView;
 
 public class UserController implements ActionListener {
@@ -59,7 +59,6 @@ public class UserController implements ActionListener {
 			String selectedUser = this.view.getFollowingUsersList().getSelectedValue();
 
 			if(selectedUser != null && currentUser.getFollowingUsers().contains(selectedUser)) {
-				System.out.println("çaalıştım unf");
 				List<String> followings = currentUser.getFollowingUsers();
 				followings.remove(selectedUser);
 				currentUser.setFollowingUsers(followings);
@@ -74,8 +73,8 @@ public class UserController implements ActionListener {
 		}
 		else if (e.getSource() == this.view.getBackButton()) {
 			setVisible(false);
-			MainMenuController2  mainMenuController = new MainMenuController2(currentUser);
-			MainMenuView2 mainMenuView = new MainMenuView2(mainMenuController);
+			MainMenuController mainMenuController = new MainMenuController(currentUser);
+			MainMenuView mainMenuView = new MainMenuView(mainMenuController);
 			mainMenuController.setView(mainMenuView);
 			mainMenuView.setVisible(true);
 		}

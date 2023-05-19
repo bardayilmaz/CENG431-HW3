@@ -64,7 +64,7 @@ public class LoginView extends JFrame implements Observer {
         constraints.gridy = 3;
         panel.add(errorMessageLabel, constraints);
 
-        // Set the panel as the content pane
+        // Set the panel as the content panel
         setContentPane(panel);
     }
 
